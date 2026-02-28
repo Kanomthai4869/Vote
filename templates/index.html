@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>ฟอร์มให้คะแนนเพื่อนร่วมกลุ่ม</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f4f4f9; padding: 20px; }
+        .container { max-width: 500px; margin: 40px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #333; margin-bottom: 20px; }
+        
+        /* จัดรูปแบบให้ชื่อและช่องกรอกคะแนนอยู่บรรทัดเดียวกัน */
+        .vote-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
+        .vote-row:last-child { border-bottom: none; }
+        .member-name { font-weight: bold; font-size: 16px; color: #444; }
+        
+        select { width: 150px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-size: 16px; }
+        button { width: 100%; background-color: #28a745; color: white; border: none; padding: 15px; cursor: pointer; margin-top: 20px; font-weight: bold; font-size: 16px; border-radius: 5px; }
+        button:hover { background-color: #218838; }
+        
+        .links { text-align: center; margin-top: 20px; display: block; text-decoration: none; color: #555; }
+        .links:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>📝 ให้คะแนนเพื่อนทุกคน</h2>
+        <form method="POST">
+            
+            {% for member in members %}
+            <div class="vote-row">
+                <div class="member-name">{{ member }}</div>
+                <select name="{{ member }}" required>
+                    <option value="" disabled selected>-- เลือก --</option>
+                    {% for s in allowed_scores %}
+                        <option value="{{ s }}">{{ s }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            {% endfor %}
+
+            <button type="submit">ส่งคะแนนทั้งหมด</button>
+        </form>
+        <a class="links" href="{{ url_for('results') }}">📊 ดูผลคะแนนเฉลี่ยทั้งหมด</a>
+    </div>
+</body>
+</html>

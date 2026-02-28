@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>ผลคะแนนเฉลี่ย</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f4f4f9; padding: 20px; }
+        .container { max-width: 600px; margin: 40px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #333; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: center; }
+        th { background-color: #007bff; color: white; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        .links { text-align: center; margin-top: 20px; display: block; text-decoration: none; color: #007bff; font-weight: bold; }
+        .links:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>ผลคะแนนเฉลี่ยของกลุ่ม</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ชื่อ</th>
+                    <th>คะแนนเฉลี่ย</th>
+                    <th>จำนวนคนโหวต</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in avg_scores %}
+                <tr>
+                    <td>{{ row.target_name }}</td>
+                    <td><strong>{{ "%.2f"|format(row.average_score) }}</strong></td>
+                    <td>{{ row.vote_count }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3">ยังไม่มีข้อมูลการโหวต</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a class="links" href="{{ url_for('index') }}">⬅️ กลับไปหน้าฟอร์มให้คะแนน</a>
+    </div>
+</body>
+</html>
